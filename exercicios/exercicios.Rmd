@@ -11,14 +11,13 @@ options(scipen=999)
 ```{r}
 library(tidyverse)
 library(MASS)
+library(kableExtra)
 ```
-
-
 
 ## Exercício 2 (página 6)
 Sabe-se que em certo processo de fabricação existe uma fração de defeituosos de 1%. Se o consumidor padrão compra um lote com 50 produtos selecionados ao acaso, qual é a probabilidade de que receba no máximo 2 defeituosos?
 
-### Solução:
+#### Resposta:
 O número de defeituosos, $Y$, presente no lote tem uma distribuição binomial com parâmetros $\theta = 0.01$ e $n = 50$, $Y \sim \mathcal{b}(n, \, \theta)$. 
 
 Então, a função de probabilidade f.p. correspondente é:
@@ -35,9 +34,11 @@ pbinom(q, n, p)
 
 ## Exercício 3 (página 6)
 
-Na planta do exercício anterior existe uma política de troca-livre do produto defeituoso que é comprado. Se o custo de produção é de $\text{\$}10$ u. m. e o produto é vendido por $\text{\$}15$ u. m. qual o lucro que a planta tem por item vendido?
+Na planta do exercício anterior existe uma política de troca-livre do produto defeituoso que é comprado. Se o custo de produção é de $\text{\$}10$ u. m. e o produto é vendido por $\text{\$}15$ u. m. Qual o lucro que a planta tem por item vendido?
 
-### Solução:
+<br>
+
+#### Resposta:
 
 O item é perfeito ou defeituoso. A probabilidade de defeituoso é $\theta = 0,01$.
 
@@ -61,12 +62,15 @@ $$
 
 * Logo, o lucro por produto vendido é $15 - 10,10 = \text{\$}4,90$.
 
+<br>
 
 ## Exercício 4 (página 6)
 
 Considere um sistema composto por quatro (04) componentes. Estes componentes podem ser bombas de água em um sistema de engenharia mecânica, estruturas de suporte em um sistema de engenharia civil, transformadores de estação distribuidora em um sistema de potência, microprocessadores no controle de trocadores de calor em um sistema de engenharia química, entre outros. Portanto, embora o problema seja descrito em termos de casos específicos, ele pode representar uma vasta variedade de aplicações em engenharia. Considere os componentes idênticos e com uma probabilidade de desempenho sem falha de 0,9 e, ainda, independentes. Os estados existentes para os componentes são: S (desempenho sem falhas) e F (falha).
 
 a) Escreva a expressão do número de combinações dos estados:
+
+#### Resposta:
 
 $(S_1 \cap S_2 \cap S_3 \cap S_4) \cup \\
 (S_1 \cap S_2 \cap S_3 \cap F_4) \cup \\
@@ -85,13 +89,21 @@ $(S_1 \cap S_2 \cap S_3 \cap S_4) \cup \\
 (F_1 \cap F_2 \cap F_3 \cap S_4) \cup \\
 (F_1 \cap F_2 \cap F_3 \cap F_4)$
 
+<br>
+
 b) Qual o número total de estados que o sistema pode assumir?
+
+#### Reposta:
 
 $S^4 +  4S^3F + 6S^2F^2 + 4SF^3 + F^4$
 
 $1 + 4 + 6 + 4 + 1 = 16$
 
+<br>
+
 c) É possível escrever a expressão do item (a) como a potência de um binômio? Qual?
+
+#### Resposta:
 
 $\sum_{k=0}^{4} \dbinom{4}{k} F^n S^{n-k}$
 
@@ -99,7 +111,11 @@ $\dbinom{4}{0} F^n S^{n-0} + \dbinom{4}{1} F^n S^{n-1} + \dbinom{4}{2} F^n S^{n-
 
 $S^4 +  4S^3F + 6S^2F^2 + 4SF^3 + F^4$
 
+<br>
+
 d) Complete a tabela adiante:
+
+#### Resposta:
 
 | Estados do sistema | Probabilidade individual | 
 | :------------- | :---------- | 
@@ -122,7 +138,9 @@ for (x in falhas) {
 }
 ```
 
-## Exercício 5 (página 6)
+<br>
+
+## Exercício 5 (página 7)
 
 No exercício 4 é assumido que quatro critérios de falha são considerados:
 
@@ -136,29 +154,95 @@ d) falha dos quatro componentes derruba o sistema.
 
 Então, pede-se:
 
-1) qual a confiabilidade, R, do sistema com o critério b?
+1) Qual a confiabilidade, R, do sistema com o critério b?
+
+#### Resposta:
+
+Se a falha em dois ou mais componentes derruba o sistema, isto quer dizer que o sistema suporta a falha de no máximo 1 componente, para funcionar normalmente.
+
+A probabilidade de falha de até 1 componente pode ser expressada da seguinte forma:
+
+$P(Y \leq 1)$
+
+Em outras palavras, a confiabilidade do sistema é a probabilidade do sistema funcionar sem falhas:
 
 $R = P(Y \leq 1)$
 
+De acordo com o enunciado do exercício 4, a probabilidade de falha do sistema é de 0.1. Portanto:
+
 $R = P[(Y=0) \cup (Y=1)]$
 
+<hr>
+
+$P(Y=k) = \dbinom{n}{k} S^{n-k} F^k$
+
+$P(Y=0) = \dbinom{4}{0} 0.9^{4-0} 0.1^0$
+
+$P(Y=0) = 0,6561$
+
+<hr>
+
+$P(Y=1) = \dbinom{4}{1} 0.9^{4-1} 0.1^1$
+
+$P(Y=1) = 0,2916$
+
+<hr>
+
+$R = P[(Y=0) \cup (Y=1)]$
+
+$R = 0,6561 + 0.,916$
+
+$R = 0,6561 + 0,2916$
+
+$R = 0,9477$
+
 ```{r}
-p_falha = 0.1
-n = 4
-R = pbinom(q=1, n, p_falha)
-print(paste('Confiabilidade R (probabilidade de ocorrer no máximo uma falha):', R))
+prob_falha = 0.1
+total_componentes = 4
+max_componentes_falha = 1
+
+R = pbinom(q = max_componentes_falha, size = total_componentes, prob = prob_falha)
+
+R
 ```
 
-2) qual a probabilidade de falha do sistema com o critério b?
+Logo, a confiabilidade é: 
 
-$P(F) = 1 - R = P(Y \geq 2)$
+$R = 0,9477$
+
+Que, em outras palavras, representa a probabilidade do sistema ter no máximo 1 componente em falha.
+
+<br>
+
+2) Qual a probabilidade de falha do sistema com o critério b?
+
+#### Resposta:
+
+Se o sistema é considerado em falha somente se 2 ou mais componentes estiverem em falha, temos que:
+
+$P(F) = 1 - R$
+
+$P(F) = 1 - P(Y \leq 1)$
+
+$P(F) = P(Y \gt 1)$
+
+Assim sendo,
+
+$P(F) = 1 - 0,9477$
+
+$P(F) = 0,0523$
 
 ```{r}
-pf_b = 1 - R
-print('Probabilidade de falha com o critério b:', pf_b)
+pF = 1 - R
+
+pF
 ```
 
 3) Faça um Estudo de Sensibilidade preenchendo a tabela abaixo e considerando que cada casela deve receber na coluna R a $P(Y > y) = 1 – P(Y < y)$ e na coluna Q o complemento, ou seja, $P(Y < y)$.
+
+<br>
+
+#### Resposta:
 
 ```{r}
 componentes = 1:6
@@ -182,7 +266,15 @@ for (c in componentes) {
 
 ![](img/exercicio_005.png)
 
-# Exemplo (página 17)
+<br>
+
+4) Os números da tabela anterior mostram duas características importantes da confiabilidade. Quais são elas?
+
+  * Quando o número de componentes necessários para o sucesso é o total disponível , o valor da confiabilidade do sistema é reduzido, enquanto o número de componentes aumenta.
+  
+  * Ao fixar o número de componentes necessários para o sucesso, a confiabildiade do sistema aumenta enquanto o número de componentes disponíveis também aumenta.
+
+## Exemplo (página 17)
 
 ```{r}
 t = seq(0,40, length=1000)
@@ -213,9 +305,13 @@ for (i in 1:length(lbls)) {
 
 ```
 
-# Lista de Exercícios 1 (página 18)
+<br>
+
+## Lista de Exercícios 1 (página 18)
 
 1. Explique cada uma das curvas dos gráficos anteriores.
+
+#### Resposta:
 
   + Gráfico da Função Confiabilidade:
   
@@ -228,12 +324,40 @@ for (i in 1:length(lbls)) {
   
 2. Determine a função de confiabilidade, R(t), referente a dados modelados segundo a distribuição exponencial.
 
+<br>
+
+#### Resposta:
+
+$R(t) = P(T > t)$
+
+$R(t) = 1 - P(T \leq t)$
+
+$R(t) = 1 - F(t)$
+
+$R(t) = 1 - F(t)$
+
+<hr>
+
+Conforme o enunciado, a distribuição exponencial possui média $\dfrac{1}{5}$. Logo,
+
+$E(T) =  \dfrac{1}{\theta} = \dfrac{1}{5}$
+
+$\theta = 5$
+
+Assim sendo:
+
+$R(t) = 1 - F(t)$
+
+$R(t) = 1 - \int_{0}^{t} \theta e^{\theta t} \,dt$
+
+$R(t) = e^{-\theta t}$
+
 ```{r}
 t = seq(0,1.2, length=1000)
 
-fd = pexp(t, rate = 5) # f.d
+Ft = pexp(t, rate = 5) # f.d.a
 
-R = 1 - fd # Confiabilidade
+Rt = 1 - Ft # Função confiabilidade
 
 df = data.frame(t = t, R = R)
 
@@ -242,14 +366,17 @@ ggplot(df, aes(x=t, y=R)) +
   labs(x = 't', y = 'R', title='Função Confiabilidade - Distribuição Exponencial com parâmtro = 5')
 ```
 
-8. Os dados a seguir correspondem aos tempos até a falha de determinado componente de um produto. Pede-se:
+<br>
 
+8. Os dados a seguir correspondem aos tempos até a falha de determinado componente de um produto. Pede-se:
 
 a) Faça os gráficos das funções: 
   + densidade de probabilidade f(t);
   + distribuição (acumulada) de probabilidade F(t);
   + confiabilidade R(t);
   + risco h(t).
+  
+#### Resposta:
   
 A v.a. T, tempo até a falha, é contígua, logo tem uma f.d.p. Então, deve-se identificar a distribuição que melhor se ajusta aos dados, escolhendo a distribuição com maior p-valor.
 
@@ -335,7 +462,11 @@ for (i in 1:length(lbls)) {
 
 ```
 
+<br>
+
 9. Usando as estimativas dos parâmetros da Weibull, escreva os modelos estimados da função densidade de probabilidade (f.d.p.), função distribuição de probabilidade (f.d.), função de confiabilidade $R(t)$ e função de risco (taxa de falhas) $\lambda(t)$.
+
+#### Resposta:
 
 <br>
 
@@ -381,6 +512,436 @@ $\lambda(t) = \dfrac{\frac{\beta}{\gamma}(\frac{t}{\gamma})^{\beta-1} e^{-(t/\be
 
 $\lambda(t) = \frac{\beta}{\gamma}(\frac{t}{\gamma})^{\beta-1}$
 
+<br>
+
+## Exemplo 3: Mecanismo Manual dos Vidros das Portas de Veículos (página 28)
+
+Os fabricantes do mecanismo, cuja função é subir e descer os vidros das portas dos veículos fazem testes para obter informações importantes sobre a confiabilidade do produto. O tipo mais comum de teste é aquele em que o mecanismo desloca para cima e para baixo uma carga com peso igual ao do vidro, até que a falha ocorra. Estima-se que 30.000 ciclos (subir e descer a carga) equivalem a 10 anos de uso em condições normais. Uma amostra aleatória composta por 30 mecanismos novos foi posta em teste (teste de vida). O teste consistiu em fazê-los funcionar por 50.000 ciclos e registrar o número de ciclos completados até falhar (tempo de falha). Após os 50.000 ciclos, 18 mecanismos haviam falhado e 12 continuaram em operação. Os números de ciclos até a falha foram: 38590, 16513, 27847, 13566, 14922, 40278, 11223, 36229, 5626, 39580, 44540, 31225, 28613, 12128, 26791, 41325, 27144 e 22138. A partir desses dados amostrais deseja-se obter as seguintes informações a respeito do produto:
+
+a) Descrição numérica dos dados e verificação da Gaussianidade (normalidade).
+
+```{r}
+df = data.frame(ciclos=c(38590, 16513, 27847, 13566, 14922, 40278, 11223, 36229, 5626, 39580, 44540, 31225, 28613, 12128, 26791, 41325, 27144, 22138))
+
+df %>%
+  summarise(n = n(), minimo = min(ciclos), maximo = max(ciclos), media = mean(ciclos), mediana = median(ciclos), variancia = var(ciclos), desv_padrao = sd(ciclos)) %>%
+  mutate(coef_variacao = desv_padrao / media * 100, amplitude = maximo - minimo)
+
+ggplot(df, aes(x = ciclos)) +
+  geom_boxplot(fill = 'blue', alpha = 0.5, color = 'blue')
+```
+
+### Teste de gaussianidade
+
+```{r}
+shapiro.test(df$ciclos)
+```
+
+Os dados são gaussianos, pois p-valor > 0,05
+
+<br>
+
+b) O número médio de ciclos completados até a falha do mecanismo.
+
+#### Resposta:
+
+```{r}
+mean(df$ciclos)
+```
+
+<br>
+
+c) Pretende-se garantir o produto por 2 anos e sabe-se que o número médio de ciclos de funcionamento do produto no período de 2 anos é de 6000 ciclos. Então, há necessidade de se conhecer a fração de mecanismos defeituosos esperada nos primeiros 2 anos de uso.
+
+Sabe-se que 30000 ciclos equivalem a 10 anos, logo, 6000 corresponde a 2 anos.
+
+```{r}
+mu = 26571
+sigma = 12058.06
+t = 6000
+
+pnorm(q=t, mean = mu, sd = sigma)
+```
+
+$F(t) = P(T \leq t) = 0,04400443$
+
+Ou seja, a fração de mecanismos defeituosos ao longo de 2 anos é de 4,4%.
+
+<br>
+
+$R(t) = 1 - F(t)$
+
+$R(t) = 1 - 0,04400443$
+
+$R(t) = P(T \gt t) = 0,9559956$
+
+<br>
+
+d) O número de ciclos para o qual 10% dos produtos estarão fora de operação.
+
+#### Resposta:
+
+```{r}
+qnorm(0.1, mean=mu, sd=sigma)
+```
+
+$F^{-1}(p) = 11118$
+
+Ou seja, com 11118 ciclos, 10% dos produtos estarão fora de operação.
+
+<br>
+
+## Exercícios (página 31)
+
+1) Qual o nome que se dá a probabilidade $R(t) = P(T > t)$, onde T é a v.a. correspondente ao tempo de falha?
+
+#### Resposta:
+
+Confiabilidade.
+
+<br>
+
+2) Indique qual fábrica produz o item A de forma mais confiável, analisando as funções de confiabilidade adiante.
+
+![](img/exercicio2_pag31_1.png)
+
+![](img/exercicio2_pag31_2.png)
+
+#### Resposta:
+
+Fábrica 2
+
+<br>
 
 
+3) Calcule a fração dos produtos A (da Fábrica 1) que falham antes de completar 1 ano de uso, considerando que a modelagem do tempo de falha foi feita com a distribuição exponencial e considere que a média é 3.
 
+#### Resposta:
+
+```{r}
+media = 3
+parametro = 1/media
+
+pexp(1, parametro)
+```
+
+$F(t) = P(T \leq 1) = 0,2834687$
+
+Ou seja, 28,35% dos produtos falham antes de completar 1 ano de uso.
+
+<br>
+
+$R(t) = 1 - F(t)$
+
+$R(t) = 1 - 0,2834687$
+
+$R(t) = P(T \gt 1) = 0.7165313$
+
+Ou seja, a probabilidade do produto continuar funcionando sem falha depois de 1 ano de uso é de 71,65%.
+
+<br>
+
+## Exercícios (página 37)
+
+1) A tabela adiante mostra a distribuição do tempo de falha de um produto E, numa amostra de tamanho n = 54, bem como os valores da função de confiabilidade.
+
+![](img/exercicio1_pag37.png)
+
+a) Estime a função taxa de falha (função risco $h(t)$) no intervalo $[0, 100)$.
+
+$\hat{R}(0) = \dfrac{54}{54} = 1$
+
+$\hat{R}(100) = \dfrac{52}{54} = 0,9629$
+
+<hr>x`
+
+$\hat{h}(t, t+\Delta t] = \dfrac{\hat{R}(t) - \hat{R}(t+\Delta t)}{\Delta t \hat{R}(t)}$
+
+$\hat{h}[0,100) = \dfrac{1 - 0,962963}{100 \times 1} = 0,00037 = 0,037% por hora$
+
+<br>
+
+a) Estime a função taxa de falha (função risco $h(t)$) no intervalo $[400, 500)$.
+
+$\hat{R}(400) = \dfrac{21}{54} = 0,3889$
+
+$\hat{R}(500) = \dfrac{12}{54} = 0,2222$
+
+<hr>
+
+$\hat{h}(t, t+\Delta t] = \dfrac{\hat{R}(t) - \hat{R}(t+\Delta t)}{\Delta t \hat{R}(t)}$
+
+$\hat{h}[0,100) = \dfrac{0,3889 - 0,2222}{100 \times 1} = 0,00429 = 0,429% por hora$
+
+<br>
+
+2) Refaça o exercício 1 (anterior) completando a coluna toda da função de taxa de falhas (função risco) estimada $\hat{h}(t)$.
+
+![](img/exercicio1_pag37_02.png)
+4) O tempo de falha (tempo até falhar) de um dispositivo segue a distribuição Gaussiana com média $\mu$ e desvio padrão $\sigma = 10000$ h. Determine o valor do parâmetro $\mu$ sabendo-se que a confiabilidade do dispositivo é igual a $R(t) = 0,90$ para o tempo de uso de 50.000 h.
+
+#### Solução:
+
+$R(t) = 1 - F(t)$
+
+$0,90 = 1 - \Phi(\frac{50000 - \mu}{10000})$
+  
+$\Phi(\frac{50000 - \mu}{10000}) = 0,10$
+
+<hr>
+
+$\Phi^{-1}(0,10) = \frac{50000 - \mu}{10000} =  -1,28$
+
+$\mu = 62800$h
+
+```{r}
+qnorm(0.1)
+```
+
+```{r}
+pnorm(50000, mean = 62800, sd = 10000)
+```
+
+5) Seja o Sistema em Série formado por dois componentes C1 e C2. O tempo de vida (tempo até falhar) do componente 1 tem distribuição exponencial com parâmetro $\lambda$ e o tempo de vida do componente 2 tem distribuição Gaussiana com parâmetros $\mu$ e $\sigma^2$. Determine a confiabilidade $R(t)$ do sistema e mostre que a expectativa de vida do sistema (MTTF - tempo médio até falhar) é: $\dfrac{1}{\lambda}[1 - e^{-\lambda \mu + \frac{\lambda^2 \sigma^2}{2}}]$
+
+#### Solução:
+
+##### Componente 1:
+
+$T_{c1} \sim \epsilon(\lambda)$ 
+
+$f(t) = \lambda e^{\lambda t}$
+
+$F(t) = 1 - e^{-\lambda t}$
+
+<br>
+
+$R_{c1} = 1 - F(t)$
+
+$R_{c1} = 1 - P(T \leq t)$
+
+$R_{c1} = 1 - (1 - e^{-\lambda t})$
+
+$R_{c1} = e^{-\lambda t}$
+
+$R_{c1} = P(T > t) = e^{-\lambda t}$
+
+<hr>
+
+##### Componente 2:
+
+$T_{c2} \sim N(\mu, \sigma^2)$
+
+$f(t) = f(t; \mu, \sigma^2) = \dfrac{1}{\sigma \sqrt{2 \pi}} e^{\frac{-(t - \mu)^2}{2 \sigma^2}}$
+
+$F(t) = P(T \leq t) = \int_{-\infty}^{t} f(t) dt$
+
+<br>
+
+$R_{c2} = 1 - F(t)$
+
+$R_{c2} = 1 - P(T \leq t)$
+
+$R_{c2} = 1 - \int_{-\infty}^{t} f(t) dt$
+
+$R_{c2} = \int_{t}^{\infty} f(t) dt$
+
+$R_{c2} = P(T \gt t)$
+
+$R_{c2} = P(T \geq t)$
+
+<hr>
+
+A probabilidade de C1 funcionar no e após o término do tempo t é $P(T_{c1} \geq t) = e^{-\lambda t} = R_{c1}$
+
+A probabilidade de C2 funcionar no e após o término do tempo t é $P(T_{c2} \geq t) = 1 - F_{c2}(t) = R_{c2}$
+
+<br>
+
+O sistema funciona quando C1 funcionar e C2 funcionar, logo:
+
+$P(C_1 \cap C_2) = P(C_1) \cdot P(C_2) = R(t) $
+
+$R(t) = e^{-\lambda t} [1 - F_{c2}(t)]$
+
+<br>
+
+## Página 43
+
+8) O teste de vida que foi feito para um dispositivo forneceu dados que apontaram para um tempo médio de falha de 5 h e uma variância de aproximadamente 1 $h^2$. Faça uma comparação entre as funções de confiabilidade assumindo:
+
+a) Uma distribuição Weibull para o tempo de falha com parâmetro $\alpha = 5$;
+
+$f(t;\alpha, \beta) = \frac{\beta}{\alpha}(\frac{t}{\alpha})^{\beta -1} e^{-(t / \alpha)^\beta}$;
+
+$F(t; \alpha, \beta) = 1 - e^{-(t/\alpha)^\beta}$.
+
+Onde, 
+
+$\alpha$ é o parâmetro de escala = 5,
+
+$\beta$ é o parâmetro de forma = ?.
+
+A média da distribuição Weibull é calculada através da distribuição Gama:
+
+$E(t) = \alpha \Gamma(1 + \frac{1}{\beta})$.
+
+Sabendo que $\mu = 5$,
+
+$5 = \alpha \Gamma(1 + \frac{1}{\beta})$.
+
+Conhecendo $\alpha = 5$,
+
+$5 = 5 \Gamma(1 + \frac{1}{\beta})$.
+
+Assim sendo, deduz-se que $\Gamma(1 + \frac{1}{\beta}) = 1$.
+
+A função Gama, para todos os inteiros positivos, é definida por:
+
+$\Gamma(\alpha) = (\alpha - 1)!$
+
+Para $(\alpha - 1)! = 1$, $\alpha = 2$.
+
+Portanto, $1 + \frac{1}{\beta} = 2$. Assim sendo, $\beta = 1$.
+
+Logo, a distribuição Weibull fica definida pelos parâmetros $\alpha = 5$ e $\beta = 1$.
+
+<br>
+
+$R(t) = 1 - F(t; \alpha, \beta)$,
+
+$R(t) = 1 - [1 - e^{-(t/\alpha)^\beta}]$,
+
+$R(t) = 1 - [1 - e^{-(t/\alpha)^\beta}]$,
+
+$R(t) = e^{-(t/\alpha)^\beta}$,
+
+$R(t) = e^{-(t/5)}$.
+
+<hr>
+
+b) Uma distribuição Gaussiana para o tempo de falha com parâmetros $\mu = 5$ e $\sigma^2=1$;
+
+$f(t; \mu, \sigma^2) = \dfrac{1}{\sigma \sqrt{2 \pi}} e^{\frac{-(t - \mu)^2}{2 \sigma^2}}$;
+
+$F(t; \mu, \sigma^2) =  \int_{-\infty}^{t} f(t) dt$.
+
+Onde,
+
+$\mu$ = 5,
+
+$\sigma^2 = 1$.
+
+<br>
+
+$R(t) = 1 - F(t; \mu, \sigma^2)$;
+
+$R(t) = 1 - \int_{-\infty}^{t} f(t; \mu, \sigma^2) dt$;
+
+$R(t) = \int_{t}^{\infty} f(t; \mu, \sigma^2) dt$;
+
+$R(t) = \int_{t}^{\infty} f(t; 5, 1) dt$.
+
+<hr>
+
+c) Uma distribuição Gama para o tempo de falha com parâmetros $\alpha$ e $\lambda$.
+
+$f(t; \alpha, \beta) = \dfrac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{\Gamma \alpha}$;
+
+$F(t; \alpha, \beta) = \int_0^t f(t; \alpha, \beta) dt$.
+
+Onde,
+
+$\alpha$ é o parâmetro de forma;
+
+$\beta$ é o parâmetro de taxa ou escala inversa.
+
+<br>
+
+A média da distribuição Gama é cálculada da seguinte forma:
+
+$\mu = \dfrac{\alpha}{\beta}$
+
+Sabe-se que, pelo exemplo a) (Weibull), que $\alpha = 2$. Portanto,
+
+$5 = \dfrac{2}{\beta}$,
+
+$\beta = \frac{2}{5}$.
+
+Logo, a distribuição Gama fica definida pelos parâmetros $\alpha = 2$ e $\beta = \frac{2}{5}$.
+
+<br>
+
+$R(t) = 1 - F(t; \alpha, \beta)$
+
+$R(t) = 1 - \int_{0}^{t} f(t; \alpha, \beta) dt$;
+
+$R(t) = \int_{t}^{\infty} f(t; \alpha, \beta) dt$;
+
+$R(t) = \int_{t}^{\infty} f(t; 2, \frac{2}{5}) dt$.
+
+<hr>
+
+Faça um gráfico dos resultados.
+
+
+#### F.D.P.
+
+```{r}
+t = seq(0,20, length=100000)
+
+fdp_norm = dnorm(t, mean = 5, sd = 1)
+fdp_weib = dweibull(t, scale=5, shape=1)
+fdp_gama = dgamma(t, shape = 2, rate = 2/5)
+
+df_fdp = data.frame(t = t, Normal = fdp_norm, Weibull = fdp_weib, Gama = fdp_gama)
+
+df_fdp = df_fdp %>%
+  pivot_longer(!t, names_to='Distrib')
+
+df_fdp %>%
+  ggplot(aes(x = t, y = value, color=Distrib)) +
+  geom_line() +
+  labs(y='f(t)', title='F.D.P.', legend='Distribuição')
+```
+
+#### F.D.A.
+
+```{r}
+t = seq(0,20, length=100000)
+
+fda_norm = pnorm(t, mean = 5, sd = 1)
+fda_weib = pweibull(t, scale=5, shape=1)
+fda_gama = pgamma(t, shape = 2, rate = 2/5)
+
+df_fda = data.frame(t = t, Normal = fda_norm, Weibull = fda_weib, Gama = fda_gama)
+
+df_fda = df_fda %>%
+  pivot_longer(!t, names_to='Distrib')
+
+df_fda %>%
+  ggplot(aes(x = t, y = value, color=Distrib)) +
+  geom_line() +
+  labs(y='F(t)', title='F.D.A.', legend='Distribuição')
+```
+
+#### Confiabilidade
+
+
+```{r}
+t = seq(0,20, length=100000)
+
+conf_norm = 1 - fda_norm
+conf_weib = 1 - fda_weib
+conf_gama = 1 - fda_gama
+
+df_conf = data.frame(t = t, Normal = conf_norm, Weibull = conf_weib, Gama = conf_gama)
+
+df_conf = df_conf %>%
+  pivot_longer(!t, names_to='Distrib')
+
+df_conf %>%
+  ggplot(aes(x = t, y = value, color=Distrib)) +
+  geom_line() +
+  labs(y='R(t)', title='Confiabilidade', legend='Distribuição')
+```
