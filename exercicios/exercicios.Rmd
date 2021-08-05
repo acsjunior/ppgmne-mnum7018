@@ -1,5 +1,5 @@
 ---
-title: "exercicios"
+title: "Lista de Exercícios"
 output: html_document
 ---
 
@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 options(scipen=999)
 ```
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 library(MASS)
 library(kableExtra)
@@ -766,7 +766,7 @@ $R(t) = e^{-\lambda t} [1 - F_{c2}(t)]$
 
 <br>
 
-## Página 43
+## Exercícios página 43
 
 8) O teste de vida que foi feito para um dispositivo forneceu dados que apontaram para um tempo médio de falha de 5 h e uma variância de aproximadamente 1 $h^2$. Faça uma comparação entre as funções de confiabilidade assumindo:
 
@@ -945,3 +945,440 @@ df_conf %>%
   geom_line() +
   labs(y='R(t)', title='Confiabilidade', legend='Distribuição')
 ```
+
+<br>
+
+9) Seja uma v.a. T com distribuição Weibull de três parâmetros, ou seja, Weibull($\alpha$, $\lambda$, $\theta$) com $\theta$ sendo o parâmetro de locação (o terceiro), além dos parâmetros de forma e de escala. A f.d da distribuição Weibull é data por $F(t) = 1 - e^{-\lambda(t - \theta)^\alpha}, t \geq 0, \alpha, \lambda \geq 0$. Pede-se:
+
+a) Verifique se $F(t)$ é realmente uma função distribuição aplicando propriedades de função distribuição:
+
+<br>
+
+b) Determine a função densidade de probabilidade da v.a. T, $f(t)$:
+
+$F(t) = 1 - e^{-\lambda(t - \theta)^\alpha}$
+
+$f(t) = \dfrac{dF(t)}{dt}$
+
+$f(t) = \dfrac{d(1 - e^{-\lambda(t - \theta)^\alpha})}{dt}$
+
+$f(t) = \lambda \alpha(t - \theta)^{\alpha-1} e^{-\lambda(t-\theta)^\alpha}$
+
+<br>
+
+c) Verifique se a função determinada no item b realmente é uma função densidade de probabilidade:
+
+$\int_{0}^{\infty} f(t) dt = 1$
+
+$\int_{0}^{\infty} \lambda \alpha(t - \theta)^{\alpha-1} e^{-\lambda(t-\theta)^\alpha} dt = 1$
+
+$\int_{0}^{\infty} -e^{\lambda(t - \theta)^\alpha} = 1$
+
+$-(e^{-\infty} - e^0) = 1$
+
+<br>
+
+d) Determine a função de confiabilidade $R(t)$ dessa v.a. T:
+
+$R(t) = 1 - F(t)$
+
+$R(t) = 1 - [1 - e^{-\lambda(t - \theta)^\alpha}]$
+
+$R(t) = e^{-\lambda(t - \theta)^\alpha}$
+
+<br>
+
+e) Determine a função risco (taxa de falha) $h(t)$ dessa v.a. T:
+
+$h(t) = \dfrac{f(t)}{R(t)}$
+
+$h(t) = \dfrac{\lambda \alpha(t - \theta)^{\alpha-1} e^{-\lambda(t-\theta)^\alpha}}{e^{-\lambda(t - \theta)^\alpha}}$
+
+$h(t) = \lambda \alpha(t - \theta)^{\alpha-1}$
+
+<br>
+
+9A) Seja uma v.a. T com distribuição de Erlang. A distribuição Erlang é uma distribuição de probabilidade contínua com uma ampla aplicabilidade, principalmente devido à sua relação com a distribuição exponencial e a distribuição gama. A distribuição Erlang foi desenvolvida por Agner Krarup Erlang para analisar o número de chamadas telefônicas que poderiam ser feitas simultaneamente aos operadores das estações de comutação. Atualmente essa distribuição é utilizada em várias áreas que aplicam processos estocásticos. A distribuição de Erlang é obtida quando se tem na distribuição Gama o parâmetro de forma igual a um inteiro positivo, ou seja, na f.d.p. da $\Gamma(\alpha, \beta)$ tem-se $\alpha = k \epsilon N$.
+
+a) Escreva a função densidade de probabilidade da distribuição de Erlang:
+
+$f(t; \alpha, \beta) = \dfrac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{(\alpha - 1)!}$;
+
+<br>
+
+b) Determine a função de distribuição da v.a. com f.d.p. de Erlang:
+
+$F(t) = F(t; \alpha, \beta) = \int_0^t f(t; \alpha, \beta) dt$.
+
+$F(t) = \dfrac{\gamma(\alpha, \beta t)}{(\alpha - 1)!}$.
+
+<br>
+
+c) Verifique se $F(t)$ é realmente uma f.d. aplicando as propriedades de f.d.
+
+<br>
+
+d) Verifique se a função que você escreveu no item (a) é realmente uma função densidade de probabilidade:
+
+$\int_{0}^{\infty} f(t) dt = 1$
+
+$\int_{0}^{\infty} \dfrac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{(\alpha - 1)!} dt = 1$
+
+e) Determine a função de confiabilidade $R(t)$ dessa v.a. T e faça o seu gráfico para um par de parâmetros a sua escolha.
+
+$R(t) = 1 - F(t)$
+
+$R(t) = 1 - \dfrac{\gamma(\alpha, \beta t)}{(\alpha - 1)!}$
+
+<br>
+
+Gráfico:
+
+$R(t) = 1 - F(t; 5, 2)$
+
+```{r}
+t = seq(0,10, length=100000)
+
+fda_erlang = pgamma(t, shape = 5, rate = 2)
+
+conf_erlang = 1 - fda_erlang
+
+df_conf = data.frame(t = t, Erlang = conf_erlang)
+
+df_conf %>%
+  ggplot(aes(x=t, y=Erlang)) + 
+  geom_line(color='blue') +
+  labs(y='R(t)', title='Confiabilidade')
+```
+
+<br>
+
+f) Determine a função de risco (taxa de falha) $h(t)$ dessa v.a. T e faça o seu gráfico para um par de parâmetros a sua escolha.
+
+$h(t) = \dfrac{f(t)}{R(t)}$
+
+$h(t) = \dfrac{f(t; \alpha, \beta)}{1 - F(t; \alpha, \beta)}$
+
+$h(t) = \dfrac{f(t; 5, 2)}{1 - F(t; 5, 2)}$
+
+```{r}
+t = seq(0,10, length=100000)
+
+fdp_erlang = dgamma(t, shape = 5, rate = 2)
+
+h_erlang = fdp_erlang / conf_erlang
+
+df_h = data.frame(t = t, Erlang = h_erlang)
+
+df_h %>%
+  ggplot(aes(x=t, y=Erlang)) + 
+  geom_line(color='blue') +
+  labs(y='h(t)', title='Taxa de falha')
+```
+
+<br>
+
+## Exercícios página 47
+
+14) Seja o sistema formado por dois componentes independentes A e B conectados em série conforme figura adiante. O sistema funcionará adequadamente quando os dois componentes funcionarem corretamente. Considere $R_A$ e $R_B$ as probabilidades dos componentes A e B operarem com sucesso respectivamente, e $Q_A$ e $Q_B$ as probabilidades de falha dos componentes A e B, respectivamente. Pede-se:
+
+a) Qual a probabilidade do sistema operar com sucesso?
+
+$R = R_A \cap R_B$
+
+$R = R_A R_B$
+
+<br>
+
+b) Supondo que ao invés de dois componentes, o sistema seja formado por $n$ componentes em série $A_1, A_2, \ldots , A_n$ e com $R_{A_i}$ sendo a probabilidade do componente $A_i$,  $i = 1, 2, \ldots, n$ operar corretamente. Qual a probabilidade do sistema operar com sucesso?
+
+$R = \bigcap\limits^n_{i=1}R_{A_i}$
+
+$R = \bigcap\limits^n_{i=1}R_{A_i}$
+
+$R = \prod^n_{i=1} R_{A_i}$
+
+<br>    
+
+c) Considere a situação dos dois componentes. Então, qual a probabilidade de insucesso na operação do sistema?
+
+$Q = 1 -R_A R_B$
+
+<br>
+
+d) Considere a situação do sistema com n componentes. Então, qual a probabilidade de insucesso na operação do sistema?
+
+$Q = 1 - \prod^n_{i=1} R_{A_i}$
+
+<br>
+
+15) Seja o sistema em série formado por dez componentes idênticos e independentes, os quais devem operar com sucesso para que o sistema funcione. Se a confiabilidade de cada componente é 0,95, qual a confiabilidade do sistema?
+
+$R = 0,95^{10}$
+
+<br>
+
+16) Considere o sistema em paralelo formado por dois componentes $C_1$ e $C_2$, que funcionará quando um ou outro ou os dois componentes funcionarem.
+
+a) Qual a confiabilidade do sistema?
+
+$Q = Q_{C_1} \cap Q_{C_2}$
+
+$Q = Q_{C_1}Q_{C_2}$
+
+$R = 1 - Q_{C_1}Q_{C_2}$
+
+<br>
+
+b) Qual a probabilidade do sistema falhar?
+
+$Q = Q_{C_1}Q_{C_2}$
+
+<br>
+
+c) Supondo que o sistema seja formado por n componentes em paralelo, qual a confiabilidade do sistema?
+
+$Q = \bigcap\limits^n_{i=1}Q_{C_i}$
+
+$Q = \prod\limits^n_{i=1}Q_{C_i}$
+
+$R = 1 - \prod\limits^n_{i=1}Q_{C_i}$
+
+<br>
+
+d) Supondo que o sistema seja formado por n componentes em paralelo, qual a probabilidade do sistema não funcionar?
+
+$Q = \prod\limits^n_{i=1}Q_{C_i}$
+
+<br>
+
+## Exercícios página 49
+
+17) Um estatístico foi encarregado de estimar por meio de um teste de vida qual dos três fabricantes F1, F2 e F3 produz o componente C com maior durabilidade. Ele junto com os colegas da empresa constrói um equipamento para simular a situação real de desempenho do equipamento. O equipamento de teste construído é do tipo acelerado e os números obtidos correspondentes aos tempos de falha estão em correspondência com o tempo real por meio de uma regressão. O experimento executado é do tipo equilibrado, ou seja, o mesmo número (n = 20) de componentes de cada fabricante foi usado no teste de vida. Os números estão abaixo.
+
+```{r}
+df_f1 = data.frame(tempo=c(125, 130, 145, 160, 163, 165, 170, 172, 173, 179, 180, 185, 191, 210, 212, 215, 218, 220, 221, 225))
+df_f1$fabricante = 'F1'
+
+df_f2 = data.frame(tempo=c(135, 151, 155, 167, 170, 191, 210, 215, 225, 230, 235, 241, 255, 267, 275, 281, 290, 295, 310, 315))
+df_f2$fabricante = 'F2'
+
+df_f3 = data.frame(tempo=c(91, 99, 101, 103, 115, 117, 121, 125, 130, 131, 134, 141, 145, 151, 161, 167, 178, 180, 182, 190))
+df_f3$fabricante = 'F3'
+```
+
+a) Construa a função de confiabilidade para cada fabricante.
+
+### Estimação por máxima verossimilhaça (Weibull)
+
+<br>
+
+#### Fabricante 1
+
+<br>
+
+##### Weibull
+
+```{r}
+w_f1 = fitdistr(x = df_f1[,'tempo'], densfun = "weibull")
+print(w_f1)
+```
+
+##### Gama
+
+```{r}
+g_f1 = fitdistr(x = df_f1[,'tempo'], densfun = "gamma")
+print(g_f1)
+```
+
+#### Teste de Kolmogorov Smirnov
+
+```{r}
+# Weibull
+ks.test(df_f1[,'tempo'], 'pweibull', shape=w_f1$estimate['shape'], scale=w_f1$estimate['scale'])
+```
+
+```{r}
+# Gama
+ks.test(df_f1[,'tempo'], 'pgamma', shape=g_f1$estimate['shape'], rate=g_f1$estimate['rate'])
+```
+
+A distribuição Weibull se mostrou mais aderente do que a distribuição Gama. Portanto, a função de confiabilidade do fabricante 1 fica definida como:
+
+$R(t) = 1 - F(t; \alpha, \beta)$
+
+$R(t) = 1 - [1 - e^{-(t/\alpha)^\beta}]$
+
+$R(t) = e^{-(t/\alpha)^\beta}$
+
+$R(t) = e^{-(t/195.55)^{7.27}}$
+
+<br>
+
+#### Fabricante 2
+
+<br>
+
+##### Weibull
+
+```{r}
+w_f2 = fitdistr(x = df_f2[,'tempo'], densfun = "weibull")
+print(w_f2)
+```
+
+##### Gama
+
+```{r}
+g_f2 = fitdistr(x = df_f2[,'tempo'], densfun = "gamma")
+print(g_f2)
+```
+
+#### Teste de Kolmogorov Smirnov
+
+```{r}
+# Weibull
+ks.test(df_f2[,'tempo'], 'pweibull', shape=w_f2$estimate['shape'], scale=w_f2$estimate['scale'])
+```
+
+```{r}
+# Gama
+ks.test(df_f2[,'tempo'], 'pgamma', shape=g_f2$estimate['shape'], rate=g_f2$estimate['rate'])
+```
+
+A distribuição Gama se mostrou mais aderente do que a distribuição Weibull. Portanto, a função de confiabilidade do fabricante 2 fica definida como:
+
+$R(t) = 1 - F(t; \alpha, \beta)$  
+
+$R(t) = 1 - \dfrac{\gamma(\alpha, \beta t)}{\Gamma(\alpha)}$
+
+$R(t) = 1 - \dfrac{\gamma(16.83, 0,073 t)}{\Gamma(16.83)}$
+
+<br>
+
+#### Fabricante 3
+
+##### Weibull
+
+```{r}
+w_f3 = fitdistr(x = df_f3[,'tempo'], densfun = "weibull")
+print(w_f3)
+```
+
+##### Gama
+
+```{r}
+g_f3 = fitdistr(x = df_f3[,'tempo'], densfun = "gamma")
+print(g_f3)
+```
+
+#### Teste de Kolmogorov Smirnov
+
+```{r}
+# Weibull
+ks.test(df_f3[,'tempo'], 'pweibull', shape=w_f3$estimate['shape'], scale=w_f3$estimate['scale'])
+```
+
+```{r}
+# Gama
+ks.test(df_f3[,'tempo'], 'pgamma', shape=g_f3$estimate['shape'], rate=g_f3$estimate['rate'])
+```
+
+A distribuição Gama se mostrou mais aderente do que a distribuição Weibull. Portanto, a função de confiabilidade do fabricante 2 fica definida como:
+
+$R(t) = 1 - F(t; \alpha, \beta)$  
+
+$R(t) = 1 - \dfrac{\gamma(\alpha, \beta t)}{\Gamma(\alpha)}$
+
+$R(t) = 1 - \dfrac{\gamma(21.72, 0.16 t)}{\Gamma(21.72)}$
+
+<br>
+
+b) Construa a função risco, também, para cada fabricante.
+
+#### Fabricante 1:
+
+$h(t) = \dfrac{f(t)}{R(t)}$
+
+$h(t) = \dfrac{\frac{\beta}{\alpha}(\frac{t}{\alpha})^{\beta -1} e^{-(t / \alpha)^\beta}}{e^{-(t/\alpha)^\beta}}$
+
+$h(t) = e^{-(t/\alpha)^\beta}$
+
+<br>
+
+#### Fabricante 2:
+
+$h(t) = \dfrac{f(t)}{R(t)}$
+
+$h(t) = \dfrac{f(t)}{1 - \dfrac{\gamma(\alpha, \beta t)}{\Gamma(\alpha)}}$
+
+<br>
+
+#### Fabricante 3:
+
+$h(t) = \dfrac{f(t)}{R(t)}$
+
+$h(t) = \dfrac{\dfrac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{\Gamma (\alpha)}}{1 - \dfrac{\gamma(\alpha, \beta t)}{\Gamma(\alpha)}}$
+
+<br>
+
+c) Decida qual fabricante produz o melhor componente justificando sua decisão.
+
+```{r}
+df = rbind(df_f1, df_f2)
+df = rbind(df, df_f3)
+
+df %>%
+  group_by(fabricante) %>%
+  summarise(media=mean(tempo), mediana=median(tempo), desv_padrao=sd(tempo), min=min(tempo), max=max(tempo)) %>%
+  mutate(coef_variacao=desv_padrao/media*100)
+```
+
+O fabricante 2 produz o melhor componente. Pelas estatísticas descritivas é possível notar que em média, o tempo de falha do fabricante 2 é de 230 horas, com mediana de 232 horas. Os demais fabricantes possuem o máximo inferior à mediana do fabricante 2. E todos os 3 possuem baixo coeficiente de variação.
+
+<br>
+
+
+d) Escreva o tempo médio de falha dos componentes de cada fabricante.
+
+* Fabricante 1: 182,95
+
+* Fabricante 2: 230,65
+
+* Fabricante 3: 138,10
+
+<br>
+
+e) Escreva qual é o erro padrão correspondente ao tempo médio de falha para cada fabricante.
+
+#### Fabricante 1:
+
+$S_{F1} = \dfrac{s}{\sqrt{n}}$
+
+$S_{F1} = \dfrac{30.56395}{\sqrt{20}}$
+
+$S_{F1} = 6.834307$
+
+<br>
+
+#### Fabricante 2:
+
+$S_{F1} = \dfrac{s}{\sqrt{n}}$
+
+$S_{F1} = \dfrac{55.64859}{\sqrt{20}}$
+
+$S_{F1} = 12.4434$
+
+<br>
+
+#### Fabricante 3:
+
+$S_{F1} = \dfrac{s}{\sqrt{n}}$
+
+$S_{F1} = \dfrac{30.33306}{\sqrt{20}}$
+
+$S_{F1} = 6.782678$
+
+<br>
+
+
+
