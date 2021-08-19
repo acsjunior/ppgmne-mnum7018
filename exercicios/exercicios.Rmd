@@ -17,7 +17,7 @@ library(kableExtra)
 ## Exercício 2 (página 6)
 Sabe-se que em certo processo de fabricação existe uma fração de defeituosos de 1%. Se o consumidor padrão compra um lote com 50 produtos selecionados ao acaso, qual é a probabilidade de que receba no máximo 2 defeituosos?
 
-#### Resposta:
+#### Solução:
 O número de defeituosos, $Y$, presente no lote tem uma distribuição binomial com parâmetros $\theta = 0.01$ e $n = 50$, $Y \sim \mathcal{b}(n, \, \theta)$. 
 
 Então, a função de probabilidade f.p. correspondente é:
@@ -38,7 +38,7 @@ Na planta do exercício anterior existe uma política de troca-livre do produto 
 
 <br>
 
-#### Resposta:
+#### Solução:
 
 O item é perfeito ou defeituoso. A probabilidade de defeituoso é $\theta = 0,01$.
 
@@ -70,7 +70,7 @@ Considere um sistema composto por quatro (04) componentes. Estes componentes pod
 
 a) Escreva a expressão do número de combinações dos estados:
 
-#### Resposta:
+#### Solução:
 
 $(S_1 \cap S_2 \cap S_3 \cap S_4) \cup \\
 (S_1 \cap S_2 \cap S_3 \cap F_4) \cup \\
@@ -103,7 +103,7 @@ $1 + 4 + 6 + 4 + 1 = 16$
 
 c) É possível escrever a expressão do item (a) como a potência de um binômio? Qual?
 
-#### Resposta:
+#### Solução:
 
 $\sum_{k=0}^{4} \dbinom{4}{k} F^n S^{n-k}$
 
@@ -115,7 +115,7 @@ $S^4 +  4S^3F + 6S^2F^2 + 4SF^3 + F^4$
 
 d) Complete a tabela adiante:
 
-#### Resposta:
+#### Solução:
 
 | Estados do sistema | Probabilidade individual | 
 | :------------- | :---------- | 
@@ -156,7 +156,7 @@ Então, pede-se:
 
 1) Qual a confiabilidade, R, do sistema com o critério b?
 
-#### Resposta:
+#### Solução:
 
 Se a falha em dois ou mais componentes derruba o sistema, isto quer dizer que o sistema suporta a falha de no máximo 1 componente, para funcionar normalmente.
 
@@ -216,7 +216,7 @@ Que, em outras palavras, representa a probabilidade do sistema ter no máximo 1 
 
 2) Qual a probabilidade de falha do sistema com o critério b?
 
-#### Resposta:
+#### Solução:
 
 Se o sistema é considerado em falha somente se 2 ou mais componentes estiverem em falha, temos que:
 
@@ -242,7 +242,7 @@ pF
 
 <br>
 
-#### Resposta:
+#### Solução:
 
 ```{r}
 componentes = 1:6
@@ -311,7 +311,7 @@ for (i in 1:length(lbls)) {
 
 1. Explique cada uma das curvas dos gráficos anteriores.
 
-#### Resposta:
+#### Solução:
 
   + Gráfico da Função Confiabilidade:
   
@@ -326,7 +326,7 @@ for (i in 1:length(lbls)) {
 
 <br>
 
-#### Resposta:
+#### Solução:
 
 $R(t) = P(T > t)$
 
@@ -376,7 +376,7 @@ a) Faça os gráficos das funções:
   + confiabilidade R(t);
   + risco h(t).
   
-#### Resposta:
+#### Solução:
   
 A v.a. T, tempo até a falha, é contígua, logo tem uma f.d.p. Então, deve-se identificar a distribuição que melhor se ajusta aos dados, escolhendo a distribuição com maior p-valor.
 
@@ -466,7 +466,7 @@ for (i in 1:length(lbls)) {
 
 9. Usando as estimativas dos parâmetros da Weibull, escreva os modelos estimados da função densidade de probabilidade (f.d.p.), função distribuição de probabilidade (f.d.), função de confiabilidade $R(t)$ e função de risco (taxa de falhas) $\lambda(t)$.
 
-#### Resposta:
+#### Solução:
 
 <br>
 
@@ -543,7 +543,7 @@ Os dados são gaussianos, pois p-valor > 0,05
 
 b) O número médio de ciclos completados até a falha do mecanismo.
 
-#### Resposta:
+#### Solução:
 
 ```{r}
 mean(df$ciclos)
@@ -579,7 +579,7 @@ $R(t) = P(T \gt t) = 0,9559956$
 
 d) O número de ciclos para o qual 10% dos produtos estarão fora de operação.
 
-#### Resposta:
+#### Solução:
 
 ```{r}
 qnorm(0.1, mean=mu, sd=sigma)
@@ -595,7 +595,7 @@ Ou seja, com 11118 ciclos, 10% dos produtos estarão fora de operação.
 
 1) Qual o nome que se dá a probabilidade $R(t) = P(T > t)$, onde T é a v.a. correspondente ao tempo de falha?
 
-#### Resposta:
+#### Solução:
 
 Confiabilidade.
 
@@ -607,7 +607,7 @@ Confiabilidade.
 
 ![](img/exercicio2_pag31_2.png)
 
-#### Resposta:
+#### Solução:
 
 Fábrica 2
 
@@ -616,7 +616,7 @@ Fábrica 2
 
 3) Calcule a fração dos produtos A (da Fábrica 1) que falham antes de completar 1 ano de uso, considerando que a modelagem do tempo de falha foi feita com a distribuição exponencial e considere que a média é 3.
 
-#### Resposta:
+#### Solução:
 
 ```{r}
 media = 3
@@ -649,6 +649,8 @@ Ou seja, a probabilidade do produto continuar funcionando sem falha depois de 1 
 
 a) Estime a função taxa de falha (função risco $h(t)$) no intervalo $[0, 100)$.
 
+#### Solução:
+
 $\hat{R}(0) = \dfrac{54}{54} = 1$
 
 $\hat{R}(100) = \dfrac{52}{54} = 0,9629$
@@ -661,7 +663,9 @@ $\hat{h}[0,100) = \dfrac{1 - 0,962963}{100 \times 1} = 0,00037 = 0,037% por hora
 
 <br>
 
-a) Estime a função taxa de falha (função risco $h(t)$) no intervalo $[400, 500)$.
+b) Estime a função taxa de falha (função risco $h(t)$) no intervalo $[400, 500)$.
+
+#### Solução:
 
 $\hat{R}(400) = \dfrac{21}{54} = 0,3889$
 
@@ -676,6 +680,8 @@ $\hat{h}[0,100) = \dfrac{0,3889 - 0,2222}{100 \times 1} = 0,00429 = 0,429% por h
 <br>
 
 2) Refaça o exercício 1 (anterior) completando a coluna toda da função de taxa de falhas (função risco) estimada $\hat{h}(t)$.
+
+#### Solução:
 
 ![](img/exercicio1_pag37_02.png)
 4) O tempo de falha (tempo até falhar) de um dispositivo segue a distribuição Gaussiana com média $\mu$ e desvio padrão $\sigma = 10000$ h. Determine o valor do parâmetro $\mu$ sabendo-se que a confiabilidade do dispositivo é igual a $R(t) = 0,90$ para o tempo de uso de 50.000 h.
@@ -772,6 +778,8 @@ $R(t) = e^{-\lambda t} [1 - F_{c2}(t)]$
 
 a) Uma distribuição Weibull para o tempo de falha com parâmetro $\alpha = 5$;
 
+#### Solução:
+
 $f(t;\alpha, \beta) = \frac{\beta}{\alpha}(\frac{t}{\alpha})^{\beta -1} e^{-(t / \alpha)^\beta}$;
 
 $F(t; \alpha, \beta) = 1 - e^{-(t/\alpha)^\beta}$.
@@ -822,6 +830,8 @@ $R(t) = e^{-(t/5)}$.
 
 b) Uma distribuição Gaussiana para o tempo de falha com parâmetros $\mu = 5$ e $\sigma^2=1$;
 
+#### Solução:
+
 $f(t; \mu, \sigma^2) = \dfrac{1}{\sigma \sqrt{2 \pi}} e^{\frac{-(t - \mu)^2}{2 \sigma^2}}$;
 
 $F(t; \mu, \sigma^2) =  \int_{-\infty}^{t} f(t) dt$.
@@ -845,6 +855,8 @@ $R(t) = \int_{t}^{\infty} f(t; 5, 1) dt$.
 <hr>
 
 c) Uma distribuição Gama para o tempo de falha com parâmetros $\alpha$ e $\lambda$.
+
+#### Solução:
 
 $f(t; \alpha, \beta) = \dfrac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{\Gamma \alpha}$;
 
@@ -927,7 +939,6 @@ df_fda %>%
 
 #### Confiabilidade
 
-
 ```{r}
 t = seq(0,20, length=100000)
 
@@ -956,6 +967,8 @@ a) Verifique se $F(t)$ é realmente uma função distribuição aplicando propri
 
 b) Determine a função densidade de probabilidade da v.a. T, $f(t)$:
 
+#### Solução:
+
 $F(t) = 1 - e^{-\lambda(t - \theta)^\alpha}$
 
 $f(t) = \dfrac{dF(t)}{dt}$
@@ -967,6 +980,8 @@ $f(t) = \lambda \alpha(t - \theta)^{\alpha-1} e^{-\lambda(t-\theta)^\alpha}$
 <br>
 
 c) Verifique se a função determinada no item b realmente é uma função densidade de probabilidade:
+
+#### Solução:
 
 $\int_{0}^{\infty} f(t) dt = 1$
 
@@ -983,6 +998,8 @@ d) Determine a função de confiabilidade $R(t)$ dessa v.a. T:
 $R(t) = 1 - F(t)$
 
 $R(t) = 1 - [1 - e^{-\lambda(t - \theta)^\alpha}]$
+
+#### Solução:
 
 $R(t) = e^{-\lambda(t - \theta)^\alpha}$
 
@@ -1002,11 +1019,15 @@ $h(t) = \lambda \alpha(t - \theta)^{\alpha-1}$
 
 a) Escreva a função densidade de probabilidade da distribuição de Erlang:
 
+#### Solução:
+
 $f(t; \alpha, \beta) = \dfrac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{(\alpha - 1)!}$;
 
 <br>
 
 b) Determine a função de distribuição da v.a. com f.d.p. de Erlang:
+
+#### Solução:
 
 $F(t) = F(t; \alpha, \beta) = \int_0^t f(t; \alpha, \beta) dt$.
 
@@ -1020,11 +1041,15 @@ c) Verifique se $F(t)$ é realmente uma f.d. aplicando as propriedades de f.d.
 
 d) Verifique se a função que você escreveu no item (a) é realmente uma função densidade de probabilidade:
 
+#### Solução:
+
 $\int_{0}^{\infty} f(t) dt = 1$
 
 $\int_{0}^{\infty} \dfrac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{(\alpha - 1)!} dt = 1$
 
 e) Determine a função de confiabilidade $R(t)$ dessa v.a. T e faça o seu gráfico para um par de parâmetros a sua escolha.
+
+#### Solução:
 
 $R(t) = 1 - F(t)$
 
@@ -1055,6 +1080,8 @@ df_conf %>%
 
 f) Determine a função de risco (taxa de falha) $h(t)$ dessa v.a. T e faça o seu gráfico para um par de parâmetros a sua escolha.
 
+#### Solução:
+
 $h(t) = \dfrac{f(t)}{R(t)}$
 
 $h(t) = \dfrac{f(t; \alpha, \beta)}{1 - F(t; \alpha, \beta)}$
@@ -1084,6 +1111,8 @@ df_h %>%
 
 a) Qual a probabilidade do sistema operar com sucesso?
 
+#### Solução:
+
 $R = R_A \cap R_B$
 
 $R = R_A R_B$
@@ -1091,6 +1120,8 @@ $R = R_A R_B$
 <br>
 
 b) Supondo que ao invés de dois componentes, o sistema seja formado por $n$ componentes em série $A_1, A_2, \ldots , A_n$ e com $R_{A_i}$ sendo a probabilidade do componente $A_i$,  $i = 1, 2, \ldots, n$ operar corretamente. Qual a probabilidade do sistema operar com sucesso?
+
+#### Solução:
 
 $R = \bigcap\limits^n_{i=1}R_{A_i}$
 
@@ -1102,17 +1133,23 @@ $R = \prod^n_{i=1} R_{A_i}$
 
 c) Considere a situação dos dois componentes. Então, qual a probabilidade de insucesso na operação do sistema?
 
+#### Solução:
+
 $Q = 1 -R_A R_B$
 
 <br>
 
 d) Considere a situação do sistema com n componentes. Então, qual a probabilidade de insucesso na operação do sistema?
 
+#### Solução:
+
 $Q = 1 - \prod^n_{i=1} R_{A_i}$
 
 <br>
 
 15) Seja o sistema em série formado por dez componentes idênticos e independentes, os quais devem operar com sucesso para que o sistema funcione. Se a confiabilidade de cada componente é 0,95, qual a confiabilidade do sistema?
+
+#### Solução:
 
 $R = 0,95^{10}$
 
@@ -1121,6 +1158,8 @@ $R = 0,95^{10}$
 16) Considere o sistema em paralelo formado por dois componentes $C_1$ e $C_2$, que funcionará quando um ou outro ou os dois componentes funcionarem.
 
 a) Qual a confiabilidade do sistema?
+
+#### Solução:
 
 $Q = Q_{C_1} \cap Q_{C_2}$
 
@@ -1132,11 +1171,15 @@ $R = 1 - Q_{C_1}Q_{C_2}$
 
 b) Qual a probabilidade do sistema falhar?
 
+#### Solução:
+
 $Q = Q_{C_1}Q_{C_2}$
 
 <br>
 
 c) Supondo que o sistema seja formado por n componentes em paralelo, qual a confiabilidade do sistema?
+
+#### Solução:
 
 $Q = \bigcap\limits^n_{i=1}Q_{C_i}$
 
@@ -1147,6 +1190,8 @@ $R = 1 - \prod\limits^n_{i=1}Q_{C_i}$
 <br>
 
 d) Supondo que o sistema seja formado por n componentes em paralelo, qual a probabilidade do sistema não funcionar?
+
+#### Solução:
 
 $Q = \prod\limits^n_{i=1}Q_{C_i}$
 
@@ -1168,6 +1213,8 @@ df_f3$fabricante = 'F3'
 ```
 
 a) Construa a função de confiabilidade para cada fabricante.
+
+#### Solução:
 
 ### Estimação por máxima verossimilhaça (Weibull)
 
@@ -1295,6 +1342,8 @@ $R(t) = 1 - \dfrac{\gamma(21.72, 0.16 t)}{\Gamma(21.72)}$
 
 b) Construa a função risco, também, para cada fabricante.
 
+#### Solução:
+
 #### Fabricante 1:
 
 $h(t) = \dfrac{f(t)}{R(t)}$
@@ -1323,6 +1372,8 @@ $h(t) = \dfrac{\dfrac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{\Gamma (\alpha)}}{
 
 c) Decida qual fabricante produz o melhor componente justificando sua decisão.
 
+#### Solução:
+
 ```{r}
 df = rbind(df_f1, df_f2)
 df = rbind(df, df_f3)
@@ -1340,6 +1391,8 @@ O fabricante 2 produz o melhor componente. Pelas estatísticas descritivas é po
 
 d) Escreva o tempo médio de falha dos componentes de cada fabricante.
 
+#### Solução:
+
 * Fabricante 1: 182,95
 
 * Fabricante 2: 230,65
@@ -1349,6 +1402,8 @@ d) Escreva o tempo médio de falha dos componentes de cada fabricante.
 <br>
 
 e) Escreva qual é o erro padrão correspondente ao tempo médio de falha para cada fabricante.
+
+#### Solução:
 
 #### Fabricante 1:
 
@@ -1379,6 +1434,97 @@ $S_{F1} = \dfrac{30.33306}{\sqrt{20}}$
 $S_{F1} = 6.782678$
 
 <br>
+
+# Exemplo (página 53)
+
+Estimador de Kaplan-Meier:
+
+$\hat{R}(t) = [(\dfrac{n_1 - d_1}{n_1}) (\dfrac{n_2 - d_2}{n_2}) \ldots (\dfrac{n_0 - d_0}{n_0})]$ onde $t_0$ é o maior tempo de falha menor que $t$.
+
+A tabela a diante mostra os dados do mecanismo do vidro da porta:
+
+```{r}
+tempo = c(0, 5626, 11223, 12128, 13566, 14921, 16513, 22138, 26791, 27144, 27847, 28613, 31224, 36229, 38590, 39580, 40278, 41324, 44540)
+d = c(0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+n = c(30, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13)
+
+df = data.frame(tempo=tempo, d = d, n=n)
+
+df$R_est_aux = (df$n - df$d)/df$n
+df$R_est = cumprod(df$R_est_aux)
+df$R_est_aux = NULL
+
+df %>%
+  kable() %>%
+  kable_styling()
+```
+
+<br>
+
+# Exercícios (página 54)
+
+1) Construa o gráfico da Função de Confiabilidade estimada $\hat{R}(t)$ do mecanismo do vidro da porta.
+
+#### Solução:
+
+```{r}
+
+df %>%
+  filter(tempo > 0) %>%
+  ggplot(aes(x=tempo, y=R_est)) +
+  geom_step(color='blue') +
+  labs(y='Confiabilidade estimada', x='Tempo')
+```
+a) Fração de defeituosos que se pode esperar na garantia de 2 anos do produto:
+
+#### Solução:
+
+Conforme o enunciado, 10 anos correspondem a 30.000 ciclos. Logo, 2 anos correspondem a 6.000 ciclos.
+
+A confiabilidade estimada para dois anos corresponem a:
+
+$\frac{0,967 - 0,933}{5626 - 11223} = \frac{0,967 - x}{5626 - 6000}$
+
+$(\frac{0,967 - 0,933}{5626 - 11223})(5626-600) - 0,967 = -x$
+
+$x = \hat{R}(6000) = 96,47\%$
+
+<br>
+
+Portanto, a fração de defeituosos esperada na garantia é:
+
+$1 - \hat{R(6000)}$
+
+$1 - 0.9647 = 3,53\%$
+
+Logo, em um lote com 1000 itens, espera-se 36 itens defeituosos.
+
+<br>
+
+b) O número de ciclos para o qual 10% dos produtos estarão fora de operação:
+
+#### Solução:
+
+O percentual de 10% de falha indica uma confiabildiade de 90%. Portanto, pela tabela é possível observar que a confiabilidade de 90% corresponde a 12128 ciclos.
+
+<br>
+
+#### Solução:
+
+c) O número de ciclos para o qual 15% dos produtos estarão fora de operação:
+
+O percentual de 15% de falha corresponde a uma confiabilidade de 85%. Portanto, por interpolação temos:
+
+$\frac{0,867-0,833}{13566-14921} = \frac{0,867 - 0,850}{13566-x}$
+
+$x = 14243$ ciclos.
+
+<br>
+
+2) Um teste de vida com o mecanismo do vidro foi feito até todos falharem. Trate-se do equipamento fabricado pelas empresas A e B. Os dados adiante se referem ao fabricante A e ao fabricante B e os números são os tempos (Ciclos) até a falha obtidos no teste de vida com 30 mecanismos de cada um dos fabricantes. Compare as duas funções de confiabilidade, de quem você compraria o mecanismo?
+
+
+
 
 
 
